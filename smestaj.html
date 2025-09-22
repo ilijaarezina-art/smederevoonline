@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartmani Smederevo - Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        /* HEADER */
+        .header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 15px auto;
+        }
+        .pocetna-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+        }
+        
+        /* APARTMANI SEKCIJA */
+        .apartmani-sekcija {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 50px;
+        }
+        .apartmani-naslov {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+            font-size: 2rem;
+            position: relative;
+        }
+        .apartmani-naslov:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #1a5276;
+            margin: 15px auto 0;
+        }
+        .apartmani-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .apartman {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .apartman:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .apartman-slike-container {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+        .apartman-slike {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .apartman-slika {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .apartman-slika.active {
+            opacity: 1;
+        }
+        .slika-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .slika-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .slika-nav.prev {
+            left: 10px;
+        }
+        .slika-nav.next {
+            right: 10px;
+        }
+        .apartman-info {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .apartman-naslov {
+            font-size: 1.3rem;
+            margin: 0 0 10px;
+            color: #222;
+            display: flex;
+            align-items: center;
+        }
+        .premium-badge {
+            color: gold;
+            margin-left: 8px;
+            font-size: 1rem;
+        }
+        .apartman-opis {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex: 1;
+        }
+        .apartman-karakteristike {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .karakteristika {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .booking-btn-container {
+            margin-top: auto;
+        }
+        .booking-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .booking-btn:hover {
+            background: #154360;
+        }
+        
+        /* Lightbox stilovi */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 100;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+        
+        .close-lightbox:hover {
+            color: #aaa;
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .lightbox-nav {
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            user-select: none;
+            transition: color 0.3s;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-nav:hover {
+            color: #ddd;
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        /* RESPONZIVNOST */
+        @media (max-width: 768px) {
+            .header {
+                padding: 80px 15px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .apartmani-container {
+                grid-template-columns: 1fr;
+            }
+            .lightbox-nav {
+                font-size: 30px;
+                padding: 15px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 60px 10px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .pocetna-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .lightbox-img {
+                max-width: 95%;
+                max-height: 80%;
+            }
+            .close-lightbox {
+                top: 10px;
+                right: 15px;
+                font-size: 25px;
+                width: 40px;
+                height: 40px;
+            }
+            .lightbox-nav {
+                font-size: 25px;
+                padding: 10px;
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER SA SLIKOM -->
+    <header class="header">
+        <h1>Apartmani Smederevo</h1>
+        <p>Doživite čar srednjovekovnog grada na obali Dunava. Smederevo nudi bogatu istoriju, ukusnu gastronomiju i prelepe prizore.</p>
+        <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati se na početnu</a>
+    </header>
+
+    <!-- APARTMANI SEKCIJA -->
+    <section class="apartmani-sekcija">
+        <h2 class="apartmani-naslov">Apartmani u Smederevu</h2>
+        <div class="apartmani-container">
+            <!-- Apartman 1 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/342878829.jpg?k=83eef2f22da24f7485a6ae54d39ccb65b8086bac441aadd86efff3af03db830c&o=&hp=1" alt="Apartman 1" class="apartman-slika active">
+                        <img loading="lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/342879310.jpg?k=aaf4077ad9f9d52d39bfc4848d12b593e72c4ae848f72bff8e31a3b271b0f63c&o=&hp=1" alt="Apartman 1" class="apartman-slika">
+                        <img loading="lazy" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/342879175.jpg?k=5a793f4091e0892b6a402720dc72ea0770114c4742e4a08007acfa928098eb2f&o=&hp=1" alt="Apartman 1" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Apartmani Statik SD <i class="fas fa-star premium-badge"></i></h3>
+                    <p class="apartman-opis">Moderan apartman u samom centru Smedereva, na samo 5 minuta hoda od tvrđave.Najbolji u gradu!</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-tv"></i> Smart TV</span>
+                        <span class="karakteristika"><i class="fas fa-snowflake"></i> Klima</span>
+                        <span class="karakteristika"><i class="fas fa-utensils"></i> Kuhinja</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com/hotel/rs/apartmani-statik-sd.sr.html" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 2 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 2" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 2" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Porodični Apartman <i class="fas fa-star premium-badge"></i></h3>
+                    <p class="apartman-opis">Prostran apartman sa 2 spavaće sobe, pogodan za porodice. Besplatan parking u dvorištu.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-parking"></i> Parking</span>
+                        <span class="karakteristika"><i class="fas fa-utensils"></i> Kuhinja</span>
+                        <span class="karakteristika"><i class="fas fa-child"></i> Porodični</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 3 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 3" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 3" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Apartman sa Pogledom na Dunav <i class="fas fa-star premium-badge"></i></h3>
+                    <p class="apartman-opis">Apartman sa prelepim pogledom na Dunav i tvrđavu. Balkon za opuštanje uz zvuke reke.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-umbrella-beach"></i> Pogled na reku</span>
+                        <span class="karakteristika"><i class="fas fa-snowflake"></i> Klima</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 4 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1516550893923-42d28e5677af?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 4" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 4" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Ekonomični Studio</h3>
+                    <p class="apartman-opis">Povoljna opcija za kratkotrajne boravke. Udoban smeštaj u mirnom delu grada.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-tv"></i> TV</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 5 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 5" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 5" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Apartman sa Vrtom</h3>
+                    <p class="apartman-opis">Apartman sa privatnim vrtom i roštiljem. Idealno za ljubitelje prirode i opuštanja.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-utensils"></i> Kuhinja</span>
+                        <span class="karakteristika"><i class="fas fa-parking"></i> Parking</span>
+                        <span class="karakteristika"><i class="fas fa-tree"></i> Vrt</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 6 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 6" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 6" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Premium Loft</h3>
+                    <p class="apartman-opis">Ekskluzivni loft apartman sa modernim dizajnom i svim luksuznim pogodnostima.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-hot-tub"></i> Đakuzi</span>
+                        <span class="karakteristika"><i class="fas fa-wine-glass-alt"></i> Mini bar</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 7 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1582719471381-971d8a82a727?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 7" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1582719471381-971d8a82a727?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 7" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Apartman Centar</h3>
+                    <p class="apartman-opis">Moderno opremljen apartman u samom centru grada, blizu svih atrakcija.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-utensils"></i> Kuhinja</span>
+                        <span class="karakteristika"><i class="fas fa-snowflake"></i> Klima</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 8 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1582719471381-971d8a82a727?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 8" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1582719471381-971d8a82a727?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 8" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Apartman Dunav</h3>
+                    <p class="apartman-opis">Apartman sa prelepim pogledom na Dunav, idealan za romantične odmore.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-umbrella-beach"></i> Pogled na reku</span>
+                        <span class="karakteristika"><i class="fas fa-parking"></i> Parking</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apartman 9 -->
+            <div class="apartman">
+                <div class="apartman-slike-container">
+                    <div class="apartman-slike">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1582719471381-971d8a82a727?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 9" class="apartman-slika active">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1582719471381-971d8a82a727?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Apartman 9" class="apartman-slika">
+                    </div>
+                    <button class="slika-nav prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slika-nav next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="apartman-info">
+                    <h3 class="apartman-naslov">Apartman Tvrđava</h3>
+                    <p class="apartman-opis">Apartman u neposrednoj blizini Smederevske tvrđave, sa pogledom na istorijski spomenik.</p>
+                    <div class="apartman-karakteristike">
+                        <span class="karakteristika"><i class="fas fa-wifi"></i> WiFi</span>
+                        <span class="karakteristika"><i class="fas fa-utensils"></i> Kuhinja</span>
+                        <span class="karakteristika"><i class="fas fa-landmark"></i> Blizu tvrđave</span>
+                    </div>
+                    <div class="booking-btn-container">
+                        <a href="https://www.booking.com" class="booking-btn">Pogledaj na Booking-u</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox HTML -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <div class="lightbox-content">
+            <span class="lightbox-nav lightbox-prev">&#10094;</span>
+            <img class="lightbox-img" id="lightbox-image" src="" alt="">
+            <span class="lightbox-nav lightbox-next">&#10095;</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicijalizacija slidera za svaki apartman
+            const apartments = document.querySelectorAll('.apartman');
+            
+            apartments.forEach(apartment => {
+                const slider = apartment.querySelector('.apartman-slike');
+                const images = apartment.querySelectorAll('.apartman-slika');
+                const prevBtn = apartment.querySelector('.prev');
+                const nextBtn = apartment.querySelector('.next');
+                
+                let currentIndex = 0;
+                
+                function showImage(index) {
+                    images.forEach((img, i) => {
+                        img.classList.toggle('active', i === index);
+                    });
+                    currentIndex = index;
+                }
+                
+                function nextImage() {
+                    showImage((currentIndex + 1) % images.length);
+                }
+                
+                function prevImage() {
+                    showImage((currentIndex - 1 + images.length) % images.length);
+                }
+                
+                prevBtn.addEventListener('click', prevImage);
+                nextBtn.addEventListener('click', nextImage);
+                
+                // Lightbox funkcionalnost
+                images.forEach((img, index) => {
+                    img.addEventListener('click', () => {
+                        openLightbox(images, index);
+                    });
+                });
+            });
+            
+            // Lightbox funkcionalnost
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-image');
+            const closeBtn = document.querySelector('.close-lightbox');
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            
+            let currentImages = [];
+            let currentIndex = 0;
+            
+            function openLightbox(images, index) {
+                currentImages = Array.from(images);
+                currentIndex = index;
+                lightboxImg.src = currentImages[currentIndex].src;
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeLightbox() {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+            
+            function showNextImage() {
+                currentIndex = (currentIndex + 1) % currentImages.length;
+                lightboxImg.src = currentImages[currentIndex].src;
+            }
+            
+            function showPrevImage() {
+                currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                lightboxImg.src = currentImages[currentIndex].src;
+            }
+            
+            // Event listeners
+            closeBtn.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
+            
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display !== 'flex') return;
+                
+                switch(e.key) {
+                    case 'Escape':
+                        closeLightbox();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

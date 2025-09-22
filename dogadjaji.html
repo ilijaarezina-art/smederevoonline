@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Događaji 2025 - Visit Smederevo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #ffd900;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --rating: #f39c12;
+            --food: #e74c3c;
+            --wine: #8e44ad;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* HEADER */
+        .header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 15px auto;
+        }
+        .pocetna-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://www.smederevo.org.rs/wp-content/uploads/2021/06/smederevo-fortress.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .event-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .event-card:hover .event-image img {
+            transform: scale(1.05);
+        }
+        
+        .event-content {
+            padding: 20px;
+        }
+        
+        .event-content h3 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .event-content p {
+            margin: 0 0 15px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .event-date {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .event-location {
+            display: flex;
+            align-items: center;
+            color: #666;
+        }
+        
+        .event-location i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        .event-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .event-price {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .event-info {
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .event-info:hover {
+            background: var(--dark);
+        }
+        
+        .event-info i {
+            margin-right: 5px;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(rgba(26, 82, 118, 0.9), rgba(26, 82, 118, 0.9)), 
+                        url('https://img.freepik.com/free-photo/empty-wooden-table-with-blurred-background_53876-94828.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            border-radius: 10px;
+        }
+        
+        .newsletter h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            padding: 0 25px;
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #e6c300;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            margin-bottom: 30px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Category colors */
+        .event-card[data-type="food"] .event-date {
+            background-color: var(--food);
+        }
+        
+        .event-card[data-type="wine"] .event-date {
+            background-color: var(--wine);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                border-radius: 4px;
+                width: 100%;
+            }
+            
+            .newsletter-form button {
+                margin-top: 10px;
+                padding: 12px;
+            }
+            
+            .header {
+                padding: 80px 15px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .filter-tab {
+                margin: 5px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .page-header {
+                height: 50vh;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header {
+                padding: 60px 10px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .pocetna-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER SA SLIKOM -->
+    <header class="header">
+        <h1>Događaji u Smederevu 2025</h1>
+        <p>Istražite bogat kulturni, muzički i sportski kalendar našeg grada za 2025. godinu</p>
+        <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati se na početnu</a>
+    </header>
+    
+    <div class="container">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">Svi događaji</div>
+            <div class="filter-tab" data-filter="culture">Kultura</div>
+            <div class="filter-tab" data-filter="music">Muzika</div>
+            <div class="filter-tab" data-filter="food">Hrana & Piće</div>
+            <div class="filter-tab" data-filter="wine">Vino</div>
+        </div>
+        
+        <!-- Events Section -->
+        <div class="section-title">
+            <h2>Predstojeći događaji</h2>
+        </div>      
+        <div class="events-grid" id="events">
+            <!-- JANUAR -->
+            <!-- Smederevske svetosavske svečanosti -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Sveti_Sava_%28%4%83%4%81%4%85%4%83%4%81%4%91%4%80%4%81%4%85%29.jpg/800px-Sveti_Sava_%28%4%83%4%81%4%85%4%83%4%81%4%91%4%80%4%81%4%85%29.jpg" alt="Smederevske svetosavske svečanosti">
+                </div>
+                <div class="event-content">
+                    <h3>Smederevske svetosavske svečanosti</h3>
+                    <p>Višednevni programi posvećeni srpskom prosvetitelju Svetom Savi.</p>
+                    <div class="event-meta">
+                        <span class="event-date">21-27. Jan 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Centar za kulturu</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Izložba slavskih kolača -->
+            <div class="event-card" data-type="food">
+                <div class="event-image">
+                    <img src="https://podunavlje.info/wp-content/uploads/2023/01/kolaci-izlozba-1.jpg" alt="Izložba slavskih kolača">
+                </div>
+                <div class="event-content">
+                    <h3>Izložba slavskih kolača</h3>
+                    <p>Predstavljamo bogatu tradiciju slavskih kolača iz Smederevskog regiona.</p>
+                    <div class="event-meta">
+                        <span class="event-date">Januar 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Centar za kulturu</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Ulaz: 200 RSD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MAJ -->
+            <!-- Vitezovi i legende -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.srbijaodlicnosti.rs/wp-content/uploads/2023/05/vitezovi-smederevo.jpg" alt="Vitezovi i legende">
+                </div>
+                <div class="event-content">
+                    <h3>Vitezovi i legende</h3>
+                    <p>Festival viteških borbi i tradicije u autentičnoj srednjovekovnoj atmosferi.</p>
+                    <div class="event-meta">
+                        <span class="event-date">1-3. Maj 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mali grad Smederevske tvrđave</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Ulaz: 500 RSD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Noć muzeja -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/05/noc-muzeja-smederevo.jpg" alt="Noć muzeja">
+                </div>
+                <div class="event-content">
+                    <h3>Noć muzeja</h3>
+                    <p>Predstavljanje muzejskih zbirki u noćnim terminima uz poseban program.</p>
+                    <div class="event-meta">
+                        <span class="event-date">17. Maj 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Muzej u Smederevu</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prolećni sajam cveća i meda -->
+            <div class="event-card" data-type="food">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/04/sajam-cveca-i-meda.jpg" alt="Prolećni sajam cveća i meda">
+                </div>
+                <div class="event-content">
+                    <h3>Prolećni sajam cveća i meda</h3>
+                    <p>Prodajna izložba cveća i meda sa domaćim proizvođačima.</p>
+                    <div class="event-meta">
+                        <span class="event-date">23-25. Maj 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gradski trg</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Noćni bazar -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/05/nocni-bazar.jpg" alt="Noćni bazar">
+                </div>
+                <div class="event-content">
+                    <h3>Noćni bazar</h3>
+                    <p>Prodajna izložba rukotvorina i lokalnih proizvoda noću na gradskom trgu.</p>
+                    <div class="event-meta">
+                        <span class="event-date">31. Maj 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gradski trg</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- JUN -->
+            <!-- Put vina i hrane -->
+            <div class="event-card" data-type="wine">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/06/put-vina-i-hrane.jpg" alt="Put vina i hrane">
+                </div>
+                <div class="event-content">
+                    <h3>"Put vina i hrane"</h3>
+                    <p>Festival vina i hrane sa degustacijom lokalnih specijaliteta.</p>
+                    <div class="event-meta">
+                        <span class="event-date">Jun 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mali grad Smederevske tvrđave</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Degustacija: 1500 RSD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- JUL -->
+            <!-- Smederevsko kulturno leto -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/06/kulturno-leto.jpg" alt="Smederevsko kulturno leto">
+                </div>
+                <div class="event-content">
+                    <h3>Smederevsko kulturno leto</h3>
+                    <p>Koncerti i predstave na otvorenom prostoru tokom letnjih meseci.</p>
+                    <div class="event-meta">
+                        <span class="event-date">1. Jul - 31. Avg 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gradski trg i šetalište</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Teatar u tvrđavi -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/06/teatar-u-tvrdjavi.jpg" alt="Teatar u tvrđavi">
+                </div>
+                <div class="event-content">
+                    <h3>Teatar u tvrđavi</h3>
+                    <p>Međunarodni pozorišni festival u autentičnoj sredini Smederevske tvrđave.</p>
+                    <div class="event-meta">
+                        <span class="event-date">30. Jun - 4. Jul 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Smederevska tvrđava</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Ulaz: 400-800 RSD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Patosinema -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/07/bioskop-na-otvorenom.jpg" alt="Patosinema">
+                </div>
+                <div class="event-content">
+                    <h3>Patosinema</h3>
+                    <p>Bioskop na otvorenom uz Dunav, projekcije filmova za sve uzraste.</p>
+                    <div class="event-meta">
+                        <span class="event-date">Jul/Avgust 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Dunavski kej</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AVGUST -->
+            <!-- Tvrđava muzike -->
+            <div class="event-card" data-type="music">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/07/tvrdjava-muzike.jpg" alt="Tvrđava muzike">
+                </div>
+                <div class="event-content">
+                    <h3>"Tvrđava muzike"</h3>
+                    <p>Ambijentalni muzički festival u jedinstvenoj atmosferi Smederevske tvrđave.</p>
+                    <div class="event-meta">
+                        <span class="event-date">8-10. Avg 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Smederevska tvrđava</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Ulaz: 1000-2000 RSD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dunav film fest -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/08/dunav-film-fest.jpg" alt="Dunav film fest">
+                </div>
+                <div class="event-content">
+                    <h3>Dunav film fest</h3>
+                    <p>Međunarodni filmski festival sa projekcijama na otvorenom i zatvorenom.</p>
+                    <div class="event-meta">
+                        <span class="event-date">19-24. Avg 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Smederevska tvrđava</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Ulaz: 300-500 RSD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SEPTEMBAR -->
+            <!-- Smederevska jesen -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/09/smederevska-jesen.jpg" alt="Smederevska jesen">
+                </div>
+                <div class="event-content">
+                    <h3>Smederevska jesen</h3>
+                    <p>Privredno-turistička manifestacija sa bogatim programom za sve uzraste.</p>
+                    <div class="event-meta">
+                        <span class="event-date">11-14. Sep 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gradski trg, Smederevska tvrđava</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OKTOBAR -->
+            <!-- Nušićevi dani -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/09/nusicevi-dani.jpg" alt="Nušićevi dani">
+                </div>
+                <div class="event-content">
+                    <h3>Nušićevi dani</h3>
+                    <p>Pozorišni festival posvećen delu Branislava Nušića.</p>
+                    <div class="event-meta">
+                        <span class="event-date">23. Sep - 1. Okt 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Centar za kulturu</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Ulaz: 300-600 RSD</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Jesenji sajam cveća -->
+            <div class="event-card" data-type="food">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/09/jesenji-sajam-cveca.jpg" alt="Jesenji sajam cveća">
+                </div>
+                <div class="event-content">
+                    <h3>Jesenji sajam cveća</h3>
+                    <p>Sajam cveća, meda, zimnice i vina sa domaćim proizvođačima.</p>
+                    <div class="event-meta">
+                        <span class="event-date">1-31. Okt 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gradski trg</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Smederevska pesnička jesen -->
+            <div class="event-card" data-type="culture">
+                <div class="event-image">
+                    <img src="https://www.smederevo.org.rs/wp-content/uploads/2023/10/pesnicka-jesen.jpg" alt="Smederevska pesnička jesen">
+                </div>
+                <div class="event-content">
+                    <h3>Smederevska pesnička jesen</h3>
+                    <p>Međunarodni festival poezije sa učesnicima iz cele regiona.</p>
+                    <div class="event-meta">
+                        <span class="event-date">Oktobar 2025</span>
+                        <div class="event-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Centar za kulturu</span>
+                        </div>
+                    </div>
+                    <div class="event-action">
+                        <span class="event-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        // Filter functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const eventCards = document.querySelectorAll('.event-card');
+        
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.getAttribute('data-filter');
+                
+                eventCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-type') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Simple animation for event cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        eventCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

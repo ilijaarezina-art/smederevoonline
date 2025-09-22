@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opština Smederevo - Informacije i Kontakti</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #ffd900;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --accent: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        /* Dugme za povratak na početnu */
+        .pocetna-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+            transform: scale(1.05);
+        }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            padding: 15px 0;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+            color: var(--secondary);
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 50px;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        /* About City */
+        .about-city {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        /* Fun Fact */
+        .fun-fact {
+            background-color: #e8f4f8;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .fun-fact-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .service-card {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--secondary);
+            transition: height 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card:hover:before {
+            height: 100%;
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+        
+        .service-card h3 {
+            margin: 0 0 15px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .contact-info {
+            margin-top: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .contact-icon {
+            width: 30px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        /* Working Hours */
+        .working-hours {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .working-hours:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { right: -50%; }
+            100% { right: 150%; }
+        }
+        
+        .working-hours h4 {
+            margin: 0 0 10px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hours-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .hours-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .hours-table td {
+            padding: 8px 5px;
+        }
+        
+        .hours-table td:last-child {
+            text-align: right;
+        }
+        
+        /* Emergency Section */
+        .emergency-section {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .emergency-section h3 {
+            color: #dc3545;
+            margin-top: 0;
+        }
+        
+        /* Documents List */
+        .documents-list {
+            margin-top: 20px;
+        }
+        
+        .documents-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        
+        .documents-list li:hover {
+            transform: translateX(5px);
+        }
+        
+        .documents-list li:before {
+            content: '📄';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Joke Section */
+        .joke-section {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .joke-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        .joke-content {
+            font-style: italic;
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        /* Counter Section */
+        .counter-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .counter-item {
+            padding: 15px;
+            min-width: 150px;
+        }
+        
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .counter-text {
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .counter-item {
+                width: 50%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header {
+                height: 50vh;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .pocetna-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .counter-item {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1>Opština Smederevo</h1>
+            <p>Sve informacije i kontakti gradske uprave i javnih službi na jednom mestu</p>
+            <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati se na početnu</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <div class="breadcrumbs">
+            <a href="index.html">Početna</a> > <a href="#">Opština</a> > Informacije i Kontakti
+        </div>
+        
+        <!-- General Info Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Osnovne informacije</h2>
+            </div>
+            
+            <div class="about-city">
+                <div class="about-text">
+                    <p>Opština Smederevo obuhvata grad Smederevo i 16 okolnih naselja. Sedište opštine je u gradu Smederevu, koji je ujedno i administrativni centar Podunavskog okruga.</p>
+                    <p>Opština Smederevo pruža sve usluge građanima kroz svoje službe, od izdavanja ličnih dokumenata, preko komunalnih usluga, do urbanističkih i gradevinskih poslova.</p>
+                    
+                    <div class="fun-fact">
+                        <div class="fun-fact-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div>
+                            <strong>Znaš li?</strong> Smederevo je najveće pristanište na Dunavu u Srbiji i jedno od najvećih u Evropi!
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Gradska_skupstina_Smederevo.jpg/800px-Gradska_skupstina_Smederevo.jpg" alt="Zgrada opštine Smederevo">
+                </div>
+            </div>
+            
+            <div class="working-hours">
+                <h4>Radno vreme opštine</h4>
+                <table class="hours-table">
+                    <tr>
+                        <td>Ponedeljak - Petak</td>
+                        <td>07:30 - 15:30</td>
+                    </tr>
+                    <tr>
+                        <td>Subota</td>
+                        <td>Ne radi</td>
+                    </tr>
+                    <tr>
+                        <td>Nedelja</td>
+                        <td>Ne radi</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Građani, zapamtite!</strong></td>
+                        <td><strong>Najbolje je doći pre 10h</strong></td>
+                    </tr>
+                </table>
+            </div>
+            
+        <!-- Services Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Službe i usluge</h2>
+            </div>
+            
+            <p class="section-intro">Naš moto: "Sve što vam treba na jednom mestu, ali možda ne u istom krugu!"</p>
+            
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>Servis za lične dokumente</h3>
+                    <p>Izrada lične karte, pasoša, vozačke dozvole i drugih dokumenata.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>026/615-710</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>Bulevar Svetog Save 1</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>Najmanja gužva: utorkom popodne</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Komunalna policija</h3>
+                    <p>Rešavanje komunalnih prekršaja, prijave nepravilnosti.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>026/4627-902 i 026/672-704</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>Omladinska 1</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Komunalne usluge</h3>
+                    <p>Odvoz smeća, održavanje puteva, zelenila i javne rasvete.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>026/615-600</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>Smederevo
+Omladinska 1</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div>Za prijavu neispravne rasvete: 026/612-333</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <h3>Geodetska služba</h3>
+                    <p>Izrada geodetskih elaborata, utvrđivanje međa i parcelacija.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>026/615-750</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>Omladinska 1</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Urbanistički zavod</h3>
+                    <p>Izrada urbanističkih i prostornih planova, gradevinske dozvole.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>026/615-777</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>Omladinska 1</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div>Proces: do 30 dana (ako sve ide po planu)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3>Finansijska služba</h3>
+                    <p>Porezi, takse, doprinosi i druge finansijske obaveze.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>026/615-720</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>Bulevar Svetog Save 1</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div>Plaćanje karticom omogućeno</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="fun-fact">
+                <div class="fun-fact-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div>
+                    <strong>Savet:</strong> Pre dolaska u opštinu, proverite da li vam je potrebna prethodna najava ili zakazivanje termina. Možete uštedeti vreme!
+                </div>
+            </div>
+        </section>
+        
+        <!-- Emergency Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Hitne službe</h2>
+            </div>
+            
+            <div class="emergency-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> Hitni brojevi</h3>
+                <p>U slučaju vanrednih situacija i hitnosti, obratite se direktno na sledeće brojeve:</p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-ambulance" style="color: #dc3545;"></i>
+                        </div>
+                        <h3>Hitna pomoć</h3>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>194</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>026/617-358 </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>Kneza Mihaila 51</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-fire-extinguisher" style="color: #dc3545;"></i>
+                        </div>
+                        <h3>Vatrogasci</h3>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>193</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>026/612-555</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>Đure Salaja 16</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt" style="color: #dc3545;"></i>
+                        </div>
+                        <h3>Policija</h3>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>192</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>026/4544-100</div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>Despota Grgura 2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="fun-fact">
+                <div class="fun-fact-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div>
+                    <strong>Znaš li?</strong> Smederevska policijska stanica je jedna od najstarijih u Srbiji, osnovana 1836. godine!
+                </div>
+            </div>
+        </section>
+        
+        <!-- Additional Info Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Korisni saveti</h2>
+            </div>
+            
+            <div class="about-city">
+                <div class="about-text">
+                    <h3>Kako ubrzati postupke u opštini?</h3>
+                    <ul>
+                        <li>Proverite tačno koja dokumenta su vam potrebna pre dolaska</li>
+                        <li>Koristite online servise kada god je to moguće</li>
+                        <li>Dolazite ujutru radi bržeg usluživanja</li>
+                        <li>Za kompleksnije slučajeve, unapred zakažite termin</li>
+                    </ul>
+                    
+                    <h3>Gde parkirati?</h3>
+                    <p>Besplatno parkiralište se nalazi iza zgrade opštine (ulaz sa Severne strane).</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Smederevo_fortress_%281%29.jpg/800px-Smederevo_fortress_%281%29.jpg" alt="Smederevska tvrđava">
+                    <p style="text-align: center; font-style: italic; margin-top: 10px;">Smederevska tvrđava - najveći prizmani grad u Evropi</p>
+                </div>
+            </div>
+
+    <script>
+        // Simple counter animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.counter-number');
+            const speed = 200; // The lower the slower
+            
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.innerText;
+                    const count = +counter.innerText;
+                    
+                    // Lower value to make counting faster
+                    const inc = target / speed;
+                    
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                
+                updateCount();
+            });
+        });
+    </script>
+</body>
+</html>

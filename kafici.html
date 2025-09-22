@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafići - Porto Smederevo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #ffd900;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --rating: #f39c12;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* HEADER */
+        .header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 15px auto;
+        }
+        .pocetna-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Cafe Grid */
+        .cafe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .cafe-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .cafe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .cafe-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .cafe-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .cafe-card:hover .cafe-image img {
+            transform: scale(1.05);
+        }
+        
+        .cafe-content {
+            padding: 20px;
+        }
+        
+        .cafe-content h3 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .cafe-content p {
+            margin: 0 0 15px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .cafe-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .cafe-type {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--light);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .cafe-rating {
+            color: var(--rating);
+            font-weight: bold;
+        }
+        
+        .cafe-rating i {
+            margin-right: 3px;
+        }
+        
+        .cafe-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cafe-price {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .cafe-call {
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .cafe-call:hover {
+            background: var(--dark);
+        }
+        
+        .cafe-call i {
+            margin-right: 5px;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        /* Coming Soon Overlay */
+        .coming-soon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cafe-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .header {
+                padding: 80px 15px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .filter-tab {
+                margin: 5px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .cafe-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 60px 10px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .pocetna-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER SA SLIKOM -->
+    <header class="header">
+        <h1>Kafići u Smederevu</h1>
+        <p>Otkrijte najbolje kafiće i kafane u gradu za opuštanje i druženje</p>
+        <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati se na početnu</a>
+    </header>
+    
+    <div class="container">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">Sve</div>
+            <div class="filter-tab" data-filter="kafic">Kafići</div>
+            <div class="filter-tab" data-filter="kafana">Kafane</div>
+        </div>
+        
+        <!-- Kafići Section -->
+        <div class="section-title">
+            <h2>Kafići</h2>
+        </div>
+        
+        <div class="cafe-grid" id="cafes">
+            <!-- Kafić 1 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Kafić Central">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126332211" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 2 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Coffee & Books">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126335555" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 3 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" alt="Dunav Terrace">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126334444" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 4 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Sweet Corner">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126337777" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 5 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" alt="Green Garden">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126338888" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 6 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Urban Coffee">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126339999" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 7 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Sunset Café">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126331111" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 8 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" alt="Art Café">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126330000" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 9 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Bistro 22">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126336666" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kafić 10 -->
+            <div class="cafe-card" data-type="kafic">
+                <div class="cafe-image">
+                    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwa90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Coffee Lab">
+                    <div class="coming-soon">U pripremi</div>
+                </div>
+                <div class="cafe-content">
+                    <h3>Slobodno</h3>
+                    <p>Informacije o kafiću su u pripremi. Hvala na strpljenju.</p>
+                    <div class="cafe-meta">
+                        <span class="cafe-type">Kafić</span>
+                        <span class="cafe-rating"><i class="fas fa-star"></i> U pripremi</span>
+                    </div>
+                    <div class="cafe-action">
+                        <span class="cafe-price">Cena: U pripremi</span>
+                        <a href="tel:+38126337700" class="cafe-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Filter functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.getAttribute('data-filter');
+                const cafeCards = document.querySelectorAll('.cafe-card');
+                
+                cafeCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-type') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

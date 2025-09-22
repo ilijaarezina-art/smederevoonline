@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Znamenitosti - Porto Smederevo</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #ffd900;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --rating: #f39c12;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        /* Dugme za povratak na početnu */
+        .pocetna-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Attractions Grid */
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .attraction-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .attraction-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            background-color: #f0f0f0;
+        }
+        
+        .attraction-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .attraction-card:hover .attraction-image img {
+            transform: scale(1.05);
+        }
+        
+        .attraction-content {
+            padding: 20px;
+        }
+        
+        .attraction-content h3 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .attraction-content p {
+            margin: 0 0 15px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .attraction-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .attraction-type {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--light);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .attraction-rating {
+            color: var(--rating);
+            font-weight: bold;
+        }
+        
+        .attraction-rating i {
+            margin-right: 3px;
+        }
+        
+        .attraction-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .attraction-price {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .attraction-info {
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .attraction-info:hover {
+            background: var(--dark);
+        }
+        
+        .attraction-info i {
+            margin-right: 5px;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        /* Loading animation for images */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .attractions-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .filter-tab {
+                margin: 5px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .attractions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header {
+                height: 50vh;
+            }
+            
+            .pocetna-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1>Znamenitosti Smedereva</h1>
+            <p>Otkrijte istorijske i kulturne dragulje našeg grada</p>
+            <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati se na početnu</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">Sve</div>
+            <div class="filter-tab" data-filter="istorijsko">Istorijske</div>
+            <div class="filter-tab" data-filter="kulturno">Kulturne</div>
+            <div class="filter-tab" data-filter="prirodno">Prirodne</div>
+        </div>
+        
+        <!-- Znamenitosti Section -->
+        <div class="section-title">
+            <h2>Znamenitosti</h2>
+        </div>
+        
+        <div class="attractions-grid" id="attractions">
+            <!-- Znamenitost 1 -->
+            <div class="attraction-card" data-type="istorijsko">
+                <div class="attraction-image">
+                    <img src="https://i.postimg.cc/jj4dvLf6/tvrdjava.jpg" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Smederevska tvrđava</h3>
+                    <p>Najveća ravničarska tvrđava u Evropi, podignuta u 15. veku kao privremena prestonica Srbije. Ulaz u tvrdjavu je besplatan, a ulazak u mali grad se naplaćuje</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Istorijsko</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.9</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">200 din</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Znamenitost 2 -->
+            <div class="attraction-card" data-type="istorijsko">
+                <div class="attraction-image">
+                    <img src="/web/images/dud.jpg" alt="Karadjordjev dud" loading="lazy" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Karadjordjev dud</h3>
+                    <p>Mesto predaje ključeve grada Smedereva.</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Istorijsko</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.6</span>
+                    </div>
+                    <div class="attraction-action">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Znamenitost 3 -->
+            <div class="attraction-card" data-type="kulturno">
+                <div class="attraction-image">
+                    <img src="https://i.postimg.cc/XvtqpT9m/dom-kulutre.jpg" alt="Dom Kulture Smederevo" loading="lazy" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Dom Kulture Smederevo</h3>
+                    <p>Kulturna ustanova sa bogatim repertoarom drama, opera i baletskih predstava. Biblioteka i bioskop se takođe nalaze u sklopu doma kulture.</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Kulturno</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.7</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">Različite cene</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Znamenitost 4 -->
+            <div class="attraction-card" data-type="prirodno">
+                <div class="attraction-image">
+                    <img src="https://i.postimg.cc/HxtY4fMm/kej.jpg" alt="Dunavski kej" loading="lazy" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Dunavski kej</h3>
+                    <p>Šetalište uz reku Dunav, omiljeno mesto za šetnju, biciklizam i ribolov.</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Prirodno</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.8</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Znamenitost 5 -->
+            <div class="attraction-card" data-type="istorijsko">
+                <div class="attraction-image">
+                    <img src="https://i.postimg.cc/8zqz1dG2/Crkva.jpg" alt="Crkva sv. Đorđa" loading="lazy" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Crkva sv. Đorđa</h3>
+                    <p>Pravoslavna crkva iz 19. veka sa impresivnim ikonostasom i freskama.</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Istorijsko</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 5</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Znamenitost 6 -->
+            <div class="attraction-card" data-type="kulturno">
+                <div class="attraction-image">
+                    <img src="https://i.postimg.cc/QC3Mq14q/muzej.jpg" alt="Muzej Smederevo" loading="lazy" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Muzej Smederevo</h3>
+                    <p>Muzej sa bogatom zbirkom istorijskih eksponata vezanih za istoriju grada Smedereva.</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Kulturno</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.4</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">130-100 din</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Znamenitost 7 -->
+            <div class="attraction-card" data-type="prirodno">
+                <div class="attraction-image">
+                    <img src="https://images.unsplash.com/photo-1470114716159-e389f8712fda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Park Jug Bogdan" loading="lazy" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Jugovo</h3>
+                    <p>Deo Smedereva sa prelepom prirodom, akva parkom i poznatim restoranom Belvedere</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Prirodno</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.6</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Znamenitost 9 -->
+            <div class="attraction-card" data-type="kulturno">
+                <div class="attraction-image">
+                    <img src="https://i.postimg.cc/nLmLmCYb/biblioteka.jpg" alt="Narodna biblioteka Smederevo" loading="lazy" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Narodna biblioteka</h3>
+                    <p>Najveća biblioteka u gradu sa bogatim fondom knjiga, časopisa i multimedije.</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Kulturno</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.5</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Znamenitost 10 -->
+            <div class="attraction-card" data-type="prirodno">
+                <div class="attraction-image">
+                    <img src="https://i.postimg.cc/qRZrZnvK/plavinac.jpg" width="400" height="300" decoding="async">
+                </div>
+                <div class="attraction-content">
+                    <h3>Plavinac</h3>
+                    <p>Deo Smedereva sa bogatom prirodom i vilom Obrenovića.</p>
+                    <div class="attraction-meta">
+                        <span class="attraction-type">Prirodno</span>
+                        <span class="attraction-rating"><i class="fas fa-star"></i> 4.7</span>
+                    </div>
+                    <div class="attraction-action">
+                        <span class="attraction-price">Besplatno</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Filter functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.getAttribute('data-filter');
+                const attractionCards = document.querySelectorAll('.attraction-card');
+                
+                attractionCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-type') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

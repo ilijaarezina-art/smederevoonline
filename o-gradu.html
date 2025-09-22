@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smederevo - Grad na Dunavu | Porto Smederevo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #ffd900;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --text: #333;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: #f5f5f5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), 
+                        url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        .page-header p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+        }
+        
+        /* Dugme za povratak na početnu */
+        .pocetna-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 50px;
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        /* About City */
+        .about-city {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .about-image::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--secondary);
+            border-radius: 10px;
+            z-index: -1;
+            transition: var(--transition);
+        }
+        
+        .about-image:hover::after {
+            bottom: -10px;
+            right: -10px;
+        }
+        
+        /* Facts Grid */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .fact-card {
+            background: var(--light);
+            padding: 25px 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+        }
+        
+        .fact-card:hover {
+            transform: translateY(-5px);
+            border-bottom: 4px solid var(--primary);
+        }
+        
+        .fact-icon {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .fact-card h3 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .fact-card p {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        /* History Timeline */
+        .timeline-container {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 50px;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            top: 0;
+            bottom: 0;
+            left: 30px;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-item:after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            left: 20px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            z-index: 1;
+            transition: var(--transition);
+        }
+        
+        .timeline-item:hover:after {
+            background-color: var(--secondary);
+            transform: scale(1.2);
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .timeline-content {
+            padding: 25px;
+            background: var(--light);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+        
+        .timeline-content:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .timeline-content:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--light) transparent transparent;
+            left: -10px;
+            top: 20px;
+        }
+        
+        /* Wine Section */
+        .wine-section {
+            background: linear-gradient(rgba(94, 50, 110, 0.9), rgba(94, 50, 110, 0.9)), 
+                        url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            border-radius: 10px;
+            margin: 60px 0;
+        }
+        
+        .wine-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .wine-content h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        .wine-content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        /* Culture & Economy */
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .culture-card {
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .culture-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .culture-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .culture-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .culture-card:hover .culture-img img {
+            transform: scale(1.1);
+        }
+        
+        .culture-content {
+            padding: 20px;
+        }
+        
+        .culture-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .culture-content p {
+            margin-bottom: 15px;
+        }
+        
+        .culture-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .culture-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .culture-list li:before {
+            content: '•';
+            color: var(--secondary);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: 3px;
+        }
+        
+        .culture-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Counter */
+        .counter-section {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+            margin: 60px 0;
+            border-radius: 10px;
+        }
+        
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .counter-item {
+            padding: 20px;
+        }
+        
+        .counter-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .counter {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 10px 0;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .counter-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 250px;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .page-header p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header {
+                height: 70vh;
+                background-attachment: scroll;
+            }
+            
+            .page-header h1 {
+                font-size: 2.3rem;
+            }
+            
+            .section {
+                padding: 30px 20px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .timeline {
+                padding-left: 30px;
+            }
+            
+            .timeline:before {
+                left: 15px;
+            }
+            
+            .timeline-item:after {
+                left: 5px;
+            }
+            
+            .counter {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header {
+                height: 60vh;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .pocetna-btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .about-image::after {
+                display: none;
+            }
+            
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <h1>Smederevo - Grad na Dunavu</h1>
+                <p>Otkrijte bogatu istoriju, kulturu i prirodne lepote jednog od najznačajnijih gradova u Srbiji</p>
+                <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati na početnu</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- About City Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>O Smederevu</h2>
+            </div>
+            
+            <div class="about-city">
+                <div class="about-text">
+                    <p>Smederevo je grad u istočnoj Srbiji, administrativni centar Podunavskog okruga. Nalazi se na ušću reke Jezave u Dunav, oko 45 km istočno od Beograda. Grad je poznat po Smederevskoj tvrđavi, najvećoj ravničarskoj tvrđavi u Evropi, koja je izgrađena u 15. veku.</p>
+                    <p>Sa oko 65.000 stanovnika, Smederevo je jedan od većih gradova u Srbiji i važan industrijski, saobraćajni i kulturni centar. Grad je poznat po vinogradarstvu i proizvodnji vina, posebno sorte Smederevka.</p>
+                    <p>Smederevo je u prošlosti bilo središte Smederevske kneževine i Smederevske banovine, a u periodu od 1430. do 1439. godine bilo je prestolnica Srpske despotovine.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://www.srbijaodlicna.com/images/destination/smederevo/panorama-smedereva.jpg" alt="Panorama Smedereva">
+                </div>
+            </div>
+            
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="counter" data-target="108">108</h3>
+                    <p>Hiljada stanovnika (opština)</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>484</h3>
+                    <p>Km² površine</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>1430</h3>
+                    <p>Godina osnivanja tvrđave</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-icon">
+                        <i class="fas fa-wine-bottle"></i>
+                    </div>
+                    <h3>Smederevka</h3>
+                    <p>Autohtona sorta grožđa</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Wine Section -->
+        <section class="wine-section">
+            <div class="container">
+                <div class="wine-content">
+                    <h2>Smederevka - Ponos grada</h2>
+                    <p>Smederevka je autohtona bela sorta grožđa koja se tradicionalno gaji u podunavskom regionu Smedereva. Ova sorta daje sveža, lagana vina sa blagim kiselim noteama, karakterističnog mirisa i arome.</p>
+                    <p>Grožđe Smederevka sazreva ranije od većine sorti, već krajem avgusta ili početkom septembra. Vinogradi Smederevke zauzimaju preko 1.200 hektara u okolini grada, čineći Smederevo jednim od najvažnijih vinogradarskih regiona u Srbiji.</p>
+                    <p>Godišnja proizvodnja vina od Smederevke doseže i do 10 miliona litara, a tradicionalna manifestacija "Put vina i hrane" svake godine privlači hiljade posetilaca željnih da probaju ovo ukusno vino.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Istorija grada</h2>
+            </div>
+            
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1430.</div>
+                        <div class="timeline-content">
+                            <p>Despot Đurađ Branković osniva Smederevo kao novu prestonicu Srpske despotovine. Počinje gradnja Smederevske tvrđave, koja traje do 1439. godine.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1459.</div>
+                        <div class="timeline-content">
+                            <p>Smederevo pada pod osmansku vlast, što označava kraj Smederevske despotovine i konačan pad srednjovekovne srpske države.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1805.</div>
+                        <div class="timeline-content">
+                            <p>Tokom Prvog srpskog ustanka, Smederevo oslobađaju srpski ustanici pod vođstvom Karađorđa. Grad postaje značajno uporište ustanika.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1914.</div>
+                        <div class="timeline-content">
+                            <p>Tokom Prvog svetskog rata, Smederevo je poprište teških borbi. Austrougarska vojska bombarduje grad, pri čemu je tvrđava značajno oštećena.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1941.</div>
+                        <div class="timeline-content">
+                            <p>U Drugom svetskom ratu, u Smederevu se dešava jedna od najvećih tragedija - eksplozija u tvrđavi gde su Nemci držali municiju, usmrtivši preko 2.500 ljudi.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1970.</div>
+                        <div class="timeline-content">
+                            <p>U gradu je otvoren metalurški kombinat "Sartid", koji postaje najveći poslodavac u regionu i ključni faktor u razvoju grada tokom 20. veka.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2010.</div>
+                        <div class="timeline-content">
+                            <p>Smederevska tvrđava je uvrštena na preliminarnu listu UNESCO-ve svetske baštine, kao potencijalno mesto od izuzetne univerzalne vrednosti.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Gallery Section -->
+        <section class="section">
+            <div class="section-title">
+                <h2>Galerija Smedereva</h2>
+            </div>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://www.srbijaodlicna.com/images/destination/smederevo/smederevo-tvrdjava.jpg" alt="Smederevska tvrđava">
+                    <div class="gallery-caption">Smederevska tvrđava</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://www.srbijaodlicna.com/images/destination/smederevo/dunav-smederevo.jpg" alt="Dunav kod Smedereva">
+                    <div class="gallery-caption">Dunav kod Smedereva</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://www.srbijaodlicna.com/images/destination/smederevo/vinogradi-smederevo.jpg" alt="Vinogradi Smedereva">
+                    <div class="gallery-caption">Vinogradi Smedereva</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://www.srbijaodlicna.com/images/destination/smederevo/centar-smedereva.jpg" alt="Centar Smedereva">
+                    <div class="gallery-caption">Centar grada</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // Animacija za vremensku liniju
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            function checkVisibility() {
+                timelineItems.forEach(item => {
+                    const rect = item.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        item.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Proveri na učitavanju
+            checkVisibility();
+            
+            // Proveri pri skrolovanju
+            window.addEventListener('scroll', checkVisibility);
+            
+            // Brojači
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+            
+            function animateCounters() {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const increment = Math.ceil(target / speed);
+                    
+                    if (count < target) {
+                        counter.innerText = Math.min(count + increment, target);
+                        setTimeout(() => animateCounters(), 1);
+                    }
+                });
+            }
+            
+            // Pokreni animaciju brojača kada udu u viewport
+            let countersAnimated = false;
+            
+            function checkCounterVisibility() {
+                const counterSection = document.querySelector('.counter-section');
+                if (counterSection && !countersAnimated) {
+                    const rect = counterSection.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        animateCounters();
+                        countersAnimated = true;
+                    }
+                }
+            }
+            
+            window.addEventListener('scroll', checkCounterVisibility);
+            checkCounterVisibility();
+        });
+    </script>
+</body>
+</html>

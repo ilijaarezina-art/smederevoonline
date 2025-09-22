@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sport - Porto Smederevo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #ffd900;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --sport-green: #2ecc71;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* HEADER */
+        .header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 15px auto;
+        }
+        .pocetna-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+        }
+        
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        /* Sport Grid */
+        .sport-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .sport-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .sport-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .sport-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .sport-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .sport-card:hover .sport-image img {
+            transform: scale(1.05);
+        }
+        
+        .sport-content {
+            padding: 20px;
+        }
+        
+        .sport-content h3 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .sport-content p {
+            margin: 0 0 15px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .sport-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .sport-type {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--light);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .sport-rating {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .sport-rating i {
+            margin-right: 3px;
+        }
+        
+        .sport-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sport-price {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--sport-green);
+        }
+        
+        .sport-call {
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .sport-call:hover {
+            background: var(--dark);
+        }
+        
+        .sport-call i {
+            margin-right: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sport-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .header {
+                padding: 80px 15px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .filter-tab {
+                margin: 5px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .sport-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 60px 10px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .pocetna-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER SA SLIKOM -->
+    <header class="header">
+        <h1>Sportski sadržaji u Smederevu</h1>
+        <p>Otkrijte najbolje sportske terene i objekte za rekreaciju u gradu</p>
+        <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati se na početnu</a>
+    </header>
+    
+    <div class="container">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <div class="filter-tab active" data-filter="all">Sve</div>
+            <div class="filter-tab" data-filter="fudbal">Fudbal</div>
+            <div class="filter-tab" data-filter="padel">Padel</div>
+            <div class="filter-tab" data-filter="tenis">Tenis</div>
+            <div class="filter-tab" data-filter="kosarka">Košarka</div>
+        </div>
+        
+        <!-- Dinamički naslov sekcije -->
+        <div class="section-title">
+            <h2 id="section-heading">Svi sportski tereni</h2>
+        </div>
+        
+        <div class="sport-grid" id="sport-facilities">
+            <!-- Fudbal 1 -->
+            <div class="sport-card" data-type="fudbal">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1542853882-88a6caa0cacc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Arena 5">
+                </div>
+                <div class="sport-content">
+                    <h3>Fk Petlić</h3>
+                    <p>Moderni teren za mali fudbal sa veštačkom travom i osvetljenjem. Idealno za prijateljske utakmice i turnire. Takodje Fk Petlić je jedan od najuspešnijih klubova u gradu.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Fudbal 5</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.7</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">2000 RSD/sat</span>
+                        <a href="tel:+38126332211" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fudbal 2 -->
+            <div class="sport-card" data-type="fudbal">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1596510913920-85d87a1800d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1372&q=80" alt="Golman">
+                </div>
+                <div class="sport-content">
+                    <h3>Fk Top</h3>
+                    <p>Popularni teren za fudbal u zatvorenom i na otvorenom. Nudi mogućnost rezervacije i organizacije turnira. Takodje Fk Top je novi fudbalski klub u gradu za odličnom školom fudbala</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Fudbal 5</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.5</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">1800 RSD/sat</span>
+                        <a href="tel:+38126335555" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fudbal 3 -->
+            <div class="sport-card" data-type="fudbal">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1516466723877-e4ec1d736c8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Stadion Smederevo">
+                </div>
+                <div class="sport-content">
+                    <h3>Sportksi centar Smederevo</h3>
+                    <p>Sportski centar sa terenom za mali fudbal i košarku. Opremljen svlačionicama i kafeterijom.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Fudbal 5</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.6</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">2200 RSD/sat</span>
+                        <a href="tel:+38126334444" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fudbal 4 -->
+            <div class="sport-card" data-type="fudbal">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1575361204480-aadea25e6e68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Futbol Park">
+                </div>
+                <div class="sport-content">
+                    <h3>Fk Cepelin</h3>
+                    <p>Zatvoren teren za mali fudbal sa odličnom lokacijom.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Fudbal 5</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.8</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">2500 RSD/sat</span>
+                        <a href="tel:+38126337777" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fudbal 5 -->
+            <div class="sport-card" data-type="fudbal">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1596510913920-85d87a1800d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1372&q=80" alt="Kick Off">
+                </div>
+                <div class="sport-content">
+                    <h3>Fk Jedinstvo 1976</h3>
+                    <p>Noviji fudbalski klub u Smederevu sa terenom na otvorenom.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Fudbal 5</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.4</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">Besplatno</span>
+                        <a href="tel:+38126338888" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Padel 1 -->
+            <div class="sport-card" data-type="padel">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1666214287330-50d98ac2ffe4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Padel Club Smederevo">
+                </div>
+                <div class="sport-content">
+                    <h3>Padel Club Smederevo</h3>
+                    <p>Prvi padel tereni u gradu sa profesionalnom podlogom. Nudi treninge i opremu za iznajmljivanje.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Padel</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.9</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">2500 RSD/sat</span>
+                        <a href="tel:+38126339999" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Padel 2 -->
+            <div class="sport-card" data-type="padel">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1666214286607-4c33d5f4c9c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Padel Arena">
+                </div>
+                <div class="sport-content">
+                    <h3>Padel Arena</h3>
+                    <p>Moderni padel tereni sa osvetljenjem za igranje i noću. Organizuju se časovi za početnike.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Padel</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.7</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">2300 RSD/sat</span>
+                        <a href="tel:+38126331111" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tenis 1 -->
+            <div class="sport-card" data-type="tenis">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1595231776515-9e95e2cbfb9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=c crop&w=1374&q=80" alt="Teniski klub Smederevo">
+                </div>
+                <div class="sport-content">
+                    <h3>Teniski klub Smederevo</h3>
+                    <p>Tereni sa šljunkastom podlogom i osvetljenjem. Nudi trenere i organizacije turnira za sve uzraste.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Tenis</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.6</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">2000 RSD/sat</span>
+                        <a href="tel:+38126330000" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tenis 2 -->
+            <div class="sport-card" data-type="tenis">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1622279457406-3f588a9e43a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Tenis centar Dunav">
+                </div>
+                <div class="sport-content">
+                    <h3>Tenis centar Dunav</h3>
+                    <p>Lepo uređeni tereni sa pogledom na reku. Dostupni tereni sa tvrdom i šljunkastom podlogom.</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Tenis</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.8</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">2200 RSD/sat</span>
+                        <a href="tel:+38126336666" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Košarka 1 -->
+            <div class="sport-card" data-type="kosarka">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1390&q=80" alt="Košarkaški centar Smederevo">
+                </div>
+                <div class="sport-content">
+                    <h3>Sportksi centar Smederevo</h3>
+                    <p>Sportksi centar sa odličnim terenom i svlačionicama</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Košarka</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.5</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">1500 RSD/sat</span>
+                        <a href="tel:+38126331234" class="sport-call"><i class="fas fa-phone"></i> Pozovi</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Košarka 2 -->
+            <div class="sport-card" data-type="kosarka">
+                <div class="sport-image">
+                    <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Basket Arena">
+                </div>
+                <div class="sport-content">
+                    <h3>Veslački teren sa košarku</h3>
+                    <p>Moderan košarkaški teren sa kvalitetnom podlogom. Nalazi se na šetalištu kej i Besplatan je!</p>
+                    <div class="sport-meta">
+                        <span class="sport-type">Košarka</span>
+                        <span class="sport-rating"><i class="fas fa-star"></i> 4.7</span>
+                    </div>
+                    <div class="sport-action">
+                        <span class="sport-price">Besplatan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Filter functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const sectionHeading = document.getElementById('section-heading');
+        
+        // Mapa za prevode tipova sporta
+        const sportTypeTitles = {
+            'all': 'Svi sportski tereni',
+            'fudbal': 'Fudbal',
+            'padel': 'Padel tereni',
+            'tenis': 'Teniski tereni',
+            'kosarka': 'Košarkaški tereni'
+        };
+        
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const filter = tab.getAttribute('data-filter');
+                const sportCards = document.querySelectorAll('.sport-card');
+                
+                // Ažuriraj naslov sekcije
+                sectionHeading.textContent = sportTypeTitles[filter];
+                
+                // Filtriraj kartice
+                sportCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-type') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

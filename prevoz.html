@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prevoz - Taxi i Stanice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #ffd900;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* HEADER */
+        .header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.postimg.cc/Vvhh8LS4/centar.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 15px auto;
+        }
+        .pocetna-btn {
+            display: inline-block;
+            background: #1a5276;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .pocetna-btn:hover {
+            background: transparent;
+            border-color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .taxi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .taxi-card {
+            background-color: var(--light);
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 1rem;
+            transition: transform 0.3s;
+        }
+        
+        .taxi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .taxi-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        .call-btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        
+        .call-btn:hover {
+            background-color: #e6c300;
+        }
+        
+        .station-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .station-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--light);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .station-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        .phone-number {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 80px 15px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .taxi-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .station-info {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header {
+                padding: 60px 10px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .pocetna-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER SA SLIKOM -->
+    <header class="header">
+        <h1>Prevoz u Smederevu</h1>
+        <p>Brzi i pouzdani načini putovanja kroz grad i okolinu</p>
+        <a href="index.html" class="pocetna-btn"><i class="fas fa-home"></i> Vrati se na početnu</a>
+    </header>
+    
+    <div class="container">
+        <section>
+            <h2>Taksi Službe</h2>
+            <div class="taxi-grid">
+                <div class="taxi-card">
+                    <h3>Best Taxi</h3>
+                    <p>24/7 dostupni vozovi po celom gradu</p>
+                    <p class="phone-number">064 2222183</p>
+                    <a href="tel:064 2222183" class="call-btn">Pozovite</a>
+                </div>
+                
+                <div class="taxi-card">
+                    <h3>Pepsi Taxi</h3>
+                    <p>Najbrži dolazak na teren</p>
+                    <p class="phone-number">064 8579000</p>
+                    <a href="tel:064 8579000" class="call-btn">Pozovite</a>
+                </div>
+                
+                <div class="taxi-card">
+                    <h3>Pink Taxi</h3>
+                    <p>Posebne cene za redovne mušterije</p>
+                    <p class="phone-number">0800 345 678</p>
+                    <a href="tel:0800345678" class="call-btn">Pozovite</a>
+                </div>
+                
+                <div class="taxi-card">
+                    <h3>Bravo Taxi</h3>
+                    <p>Luksuzni vozovi za sve prilike</p>
+                    <p class="phone-number">026 672700</p>
+                    <a href="tel:026 672700" class="call-btn">Pozovite</a>
+                </div>
+                
+                <div class="taxi-card">
+                    <h3>Taxi Boy</h3>
+                    <p>Ekološki prihvatljivi vozovi</p>
+                    <p class="phone-number">26 618 218</p>
+                    <a href="tel:26 618 218" class="call-btn">Pozovite</a>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Autobuska Stanica</h2>
+            <div class="station-info">
+                <div class="station-card">
+                    <h3>Centralna Autobuska Stanica</h3>
+                    <p>Glavna autobuska stanica u gradu.</p>
+                    <p><strong>Radno vreme:</strong> 00-24h svakog dana</p>
+ <p class="phone-number">26 4622 245</p>
+                    <a href="tel:26 4622 245" class="call-btn">Pozovite</a>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Železnička Stanica</h2>
+            <div class="station-info">
+                <div class="station-card">
+                    <h3>Glavna Železnička Stanica</h3>
+                    <p>Centralna stanica za sve železničke linije, međugradske i internacionalne.</p>
+                    <p><strong>Radno vreme:</strong> 04-24h svakog dana</p>
+ <p class="phone-number">26 4621-222</p>
+                    <a href="tel:26 4621-222" class="call-btn">Pozovite informacije</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
